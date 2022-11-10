@@ -96,8 +96,6 @@ void Vehicle::drive()
                 if (streetOptions.size() > 0)
                 {
                     // pick one street at random and query intersection to enter this street
-                    std::random_device rd;
-                    std::mt19937 eng(rd());
                     std::uniform_int_distribution<> distr(0, streetOptions.size() - 1);
                     nextStreet = streetOptions.at(distr(eng));
                 }

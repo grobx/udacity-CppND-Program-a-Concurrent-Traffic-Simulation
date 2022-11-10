@@ -22,6 +22,7 @@ void MessageQueue<T>::send(T &&msg)
 {
     // add a new message to the queue and send a notification.
     std::lock_guard<std::mutex> lck(_mtx);
+    _queue.clear();
     _queue.emplace_back(std::move(msg));
     _condition.notify_one();
 }
@@ -57,8 +58,6 @@ void TrafficLight::cycleThroughPhases()
     auto lastUpdate = std::chrono::system_clock::now();
 
     // pick number of seconds at random between 4s and 6s
-    std::random_device rd;
-    std::mt19937 eng(rd());
     std::uniform_int_distribution<> distr(4000, 6000);
     auto cycle_duration = std::chrono::milliseconds(distr(eng));
 
